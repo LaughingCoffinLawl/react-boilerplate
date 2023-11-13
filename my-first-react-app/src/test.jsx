@@ -33,4 +33,41 @@ function App() {
   );
 }
 
-export default App;
+function Person() {
+  const [person, setPerson] = useState({
+    name: "",
+    lastname: "",
+    age: 100,
+  });
+
+  // GOOD - Do this!
+  const handleIncreaseAge = () => {
+    // copy the existing person object into a new object
+    // while updating the age property
+    const newPerson = { ...person, age: person.age + 1 };
+    setPerson(newPerson);
+  };
+
+  return (
+    <>
+      <input
+        type="text"
+        value={person.name}
+        onChange={(event) => setPerson({ ...person, name: event.target.value })}
+      />
+      <input
+        type="text"
+        value={person.lastname}
+        onChange={(event) =>
+          setPerson({ ...person, lastname: event.target.value })
+        }
+      />
+      <h1>{person.name}</h1>
+      <h1>{person.lastname}</h1>
+      <h2>{person.age}</h2>
+      <button onClick={handleIncreaseAge}>Increase age</button>
+    </>
+  );
+}
+
+export default Person;
