@@ -76,6 +76,7 @@ function App() {
       address: "",
     });
 
+    // Clear all input values for education
     setAddTextEducation({
       school: "",
       degree: "",
@@ -84,6 +85,7 @@ function App() {
       location: "",
     });
 
+    // Clear all input values for experiences
     setAddTextExperiences({
       company: "",
       position: "",
@@ -92,13 +94,28 @@ function App() {
       location: "",
       description: "",
     });
+
+    // Close all sections
+    setPersonalDetailOpen(false);
+    setEducationOpen(false);
+    setExperienceOpen(false);
   };
 
   return (
     <div className="container">
       <div className="formfill">
         <div className="clear">
-          <button onClick={handleClearClick}>Clear Resume</button>
+          <button
+            onClick={() => {
+              handleClearClick();
+              showExperiencesHeader ? ToggleShowEducationHeader() : "";
+              showEducationHeader ? ToggleShowExperiencesHeader() : "";
+              addingEducation ? toggleAddingEducation() : "";
+              addingExperience ? toggleAddingExperience() : "";
+            }}
+          >
+            Clear Resume
+          </button>
         </div>
         {/* Personal details tab */}
         <div className="personalDetails">
@@ -116,6 +133,8 @@ function App() {
           <div className={`inputs ${personalDetailsOpen ? "open" : "closed"}`}>
             <label>Full name</label>
             <input
+              type="text"
+              value={addText.fullname}
               placeholder="Enter full name"
               onChange={(event) =>
                 setAddText({ ...addText, fullname: event.target.value })
@@ -123,6 +142,8 @@ function App() {
             />
             <label>Email</label>
             <input
+              type="text"
+              value={addText.email}
               placeholder="Enter email"
               onChange={(event) =>
                 setAddText({ ...addText, email: event.target.value })
@@ -130,6 +151,8 @@ function App() {
             />
             <label>Phone number</label>
             <input
+              type="text"
+              value={addText.phoneNumber}
               placeholder="Enter phone number"
               onChange={(event) =>
                 setAddText({ ...addText, phoneNumber: event.target.value })
@@ -137,6 +160,8 @@ function App() {
             />
             <label>Address</label>
             <input
+              type="text"
+              value={addText.address}
               placeholder="Enter address"
               className="last"
               onChange={(event) =>
@@ -165,6 +190,8 @@ function App() {
                 <>
                   <label>School</label>
                   <input
+                    type="text"
+                    value={addTextEducation.school}
                     placeholder="Enter school / university"
                     onChange={(event) =>
                       setAddTextEducation({
@@ -175,6 +202,8 @@ function App() {
                   />
                   <label>Degree</label>
                   <input
+                    type="text"
+                    value={addTextEducation.degree}
                     placeholder="Enter degree / field of study"
                     onChange={(event) =>
                       setAddTextEducation({
@@ -185,6 +214,8 @@ function App() {
                   />
                   <label>Start Date</label>
                   <input
+                    type="text"
+                    value={addTextEducation.startDate}
                     placeholder="Enter start date"
                     onChange={(event) =>
                       setAddTextEducation({
@@ -195,6 +226,8 @@ function App() {
                   />
                   <label>End Date</label>
                   <input
+                    type="text"
+                    value={addTextEducation.endDate}
                     placeholder="Enter end date"
                     onChange={(event) =>
                       setAddTextEducation({
@@ -205,6 +238,8 @@ function App() {
                   />
                   <label>Location</label>
                   <input
+                    type="text"
+                    value={addTextEducation.location}
                     placeholder="Enter location"
                     className="last"
                     onChange={(event) =>
@@ -236,6 +271,7 @@ function App() {
             <button
               className="addExperience"
               onClick={() => {
+                !educationOpen ? toggleEducation() : "";
                 toggleAddingEducation();
                 ToggleShowEducationHeader();
               }}
@@ -264,6 +300,8 @@ function App() {
                 <>
                   <label>Company name</label>
                   <input
+                    type="text"
+                    value={addTextExperiences.company}
                     placeholder="Enter company name"
                     onChange={(event) =>
                       setAddTextExperiences({
@@ -274,6 +312,8 @@ function App() {
                   />
                   <label>Position Title</label>
                   <input
+                    type="text"
+                    value={addTextExperiences.position}
                     placeholder="Enter position title"
                     onChange={(event) =>
                       setAddTextExperiences({
@@ -284,6 +324,8 @@ function App() {
                   />
                   <label>Start Date</label>
                   <input
+                    type="text"
+                    value={addTextExperiences.startDate}
                     placeholder="Enter start date"
                     onChange={(event) =>
                       setAddTextExperiences({
@@ -294,6 +336,8 @@ function App() {
                   />
                   <label>End Date</label>
                   <input
+                    type="text"
+                    value={addTextExperiences.endDate}
                     placeholder="Enter end date"
                     onChange={(event) =>
                       setAddTextExperiences({
@@ -304,6 +348,8 @@ function App() {
                   />
                   <label>Location</label>
                   <input
+                    type="text"
+                    value={addTextExperiences.location}
                     placeholder="Enter location"
                     onChange={(event) =>
                       setAddTextExperiences({
@@ -314,6 +360,8 @@ function App() {
                   />
                   <label>Description</label>
                   <textarea
+                    type="text"
+                    value={addTextExperiences.description}
                     placeholder="Enter description..."
                     className="last"
                     onChange={(event) =>
@@ -337,8 +385,8 @@ function App() {
                     <button
                       className="delete"
                       onClick={() => {
-                        toggleAddingExperience();
                         ToggleShowExperiencesHeader();
+                        toggleExperience();
                       }}
                     >
                       Delete
@@ -351,6 +399,7 @@ function App() {
             <button
               className="addExperience"
               onClick={() => {
+                !experienceOpen ? toggleExperience() : "";
                 toggleAddingExperience();
                 ToggleShowExperiencesHeader();
               }}
