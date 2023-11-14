@@ -44,10 +44,20 @@
 
 .title {
   font-family: "Pokemon Solid", sans-serif;
+
+  &:hover {
+    color: yellow;
+    text-shadow: 0 0 10px blue;
+  }
 }
 
 p {
   font-style: italic;
+
+  &:hover {
+    color: yellow;
+    text-shadow: 0 0 10px blue;
+  }
 }
 
 .grid {
@@ -94,5 +104,15 @@ p {
   .score {
     display: flex;
     flex-direction: column;
+  }
+
+  button {
+    font-family: "Pokemon Solid", sans-serif;
+    letter-spacing: 3px;
+
+    &:hover {
+      color: yellow;
+      text-shadow: 0 0 10px blue;
+    }
   }
 }

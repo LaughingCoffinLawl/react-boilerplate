@@ -60,8 +60,9 @@ function App() {
   const handlePokemonClick = (pokemon) => {
     if (clicked.has(pokemon)) {
       // Reset everything if the pokemon is clicked twice
-      setPokemonData([]);
       setScore(0);
+      setClicked(new Set());
+      fetchPokemonData();
       setClicked(new Set());
       alert("Game Over!");
     } else {
@@ -80,6 +81,7 @@ function App() {
         setPokemonData([]);
         setScore(0);
         setClicked(new Set());
+        fetchPokemonData();
       }
     }
   };
@@ -112,9 +114,7 @@ function App() {
             <img
               src={pokemon.image}
               alt=""
-              className={`img ${
-                String(clicked).includes(pokemon) ? "clicked" : ""
-              }`}
+              className={`img ${clicked.has(pokemon) ? "clicked" : ""}`}
               onClick={() => {
                 handlePokemonClick(pokemon);
               }}
