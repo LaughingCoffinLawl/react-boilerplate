@@ -1,0 +1,98 @@
+@import url("https://fonts.cdnfonts.com/css/pokemon-solid");
+
+#root {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.title {
+  font-family: "Pokemon Solid", sans-serif;
+}
+
+p {
+  font-style: italic;
+}
+
+.grid {
+  margin: 100px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 25px;
+  justify-content: center;
+
+  .pokemon {
+    border: 1px solid;
+    border-radius: 10px;
+    height: 150px;
+
+    p {
+      color: yellow;
+      font-family: "Pokemon Solid", sans-serif;
+      text-shadow: 0 0 10px blue;
+      position: relative;
+      bottom: 50px;
+    }
+
+    &:hover {
+      transform: translateY(10px);
+    }
+  }
+
+  img {
+    width: 140px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-evenly; /* Align .text to the start and .score to the end */
+  align-items: center;
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+  }
+
+  .score {
+    display: flex;
+    flex-direction: column;
+  }
+}

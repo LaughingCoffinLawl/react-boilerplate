@@ -101,6 +101,52 @@ function App() {
     setExperienceOpen(false);
   };
 
+  const handleSaveEducation = () => {
+    // Create a new education entry
+    const newEducationEntry = {
+      school: addTextEducation.school,
+      degree: addTextEducation.degree,
+      startDate: addTextEducation.startDate,
+      endDate: addTextEducation.endDate,
+      location: addTextEducation.location,
+    };
+
+    // Update the state or save the entry to an array
+    // For example, you can use the useState hook to store an array of education entries
+    // Update the state with the new entry
+    // setEducationEntries([...educationEntries, newEducationEntry]);
+
+    setAddTextEducation([...addTextEducation, newEducationEntry]);
+
+    // After saving, reset the form inputs
+    setAddTextEducation({
+      school: "",
+      degree: "",
+      startDate: "",
+      endDate: "",
+      location: "",
+    });
+
+    // Close the education input form
+    toggleAddingEducation();
+    ToggleShowEducationHeader();
+  };
+
+  const handleEditEducation = (educationEntry) => {
+    // Set the state with the values of the selected education entry
+    setAddTextEducation({
+      school: educationEntry.school,
+      degree: educationEntry.degree,
+      startDate: educationEntry.startDate,
+      endDate: educationEntry.endDate,
+      location: educationEntry.location,
+    });
+
+    // Open the education input form for editing
+    toggleAddingEducation();
+    ToggleShowEducationHeader();
+  };
+
   return (
     <div className="container">
       <div className="formfill">
@@ -259,7 +305,16 @@ function App() {
                     >
                       Close
                     </button>
-                    <button className="save">Save</button>
+                    <button
+                      className="save"
+                      onClick={
+                        addingEducation
+                          ? handleSaveEducation
+                          : handleEditEducation
+                      }
+                    >
+                      {addingEducation ? "Save" : "Edit"}
+                    </button>
                     <button className="delete" onClick={toggleAddingEducation}>
                       Delete
                     </button>
