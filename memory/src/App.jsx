@@ -7,9 +7,12 @@ function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [score, setScore] = useState(0);
   const [maxScore, setMaxScore] = useState(0);
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(new Set());
 
   function increaseScore() {
+    if (score === maxScore) {
+      setMaxScore(maxScore + 1);
+    }
     setScore(score + 1);
   }
 
@@ -50,19 +53,41 @@ function App() {
     return shuffledArray;
   };
 
-  const handlePokemonClick = (index) => {
-    const shuffledData = shuffleArray(pokemonData);
-    setPokemonData(shuffledData);
-    if (!String(clicked).includes(index)) {
-      setClicked((prevClickedPokemon) => {
-        // Ensure prevClickedPokemon is an array
-        if (!Array.isArray(prevClickedPokemon)) {
-          return [index];
-        }
-        return [...prevClickedPokemon, index];
-      });
+  const shufflePokemon = () => {
+    setPokemonData((prevData) => shuffleArray(prevData));
+  };
+
+  const handlePokemonClick = (pokemon) => {
+    if (clicked.has(pokemon)) {
+      // Reset everything if the pokemon is clicked twice
+      setPokemonData([]);
+      setScore(0);
+      setClicked(new Set());
+      alert("Game Over!");
+    } else {
+      // Shuffle the pokemons on each click
+      shufflePokemon();
+
+      // Increment the score
       increaseScore();
+
+      // Add the clicked pokemon to the `clicked` set
+      setClicked((prevClicked) => new Set([...prevClicked, pokemon]));
+
+      // Check if the player has clicked all the pokemons
+      if (score === POKEMON_IDS.length - 1) {
+        alert("You Won!");
+        setPokemonData([]);
+        setScore(0);
+        setClicked(new Set());
+      }
     }
+  };
+
+  const resetGame = () => {
+    setScore(0);
+    setClicked(new Set());
+    fetchPokemonData();
   };
 
   return (
@@ -76,6 +101,9 @@ function App() {
           <p>Score: {score}</p>
           <p>Max Score: {maxScore}</p>
         </div>
+        <div className="buttons">
+          <button onClick={resetGame}>Retry</button>
+        </div>
       </div>
 
       <div className="grid">
@@ -84,11 +112,11 @@ function App() {
             <img
               src={pokemon.image}
               alt=""
-              className={`pokemon img ${
-                String(clicked).includes(index) ? "clicked" : ""
+              className={`img ${
+                String(clicked).includes(pokemon) ? "clicked" : ""
               }`}
               onClick={() => {
-                handlePokemonClick(index);
+                handlePokemonClick(pokemon);
               }}
             />
             <p>{pokemon.name}</p>
