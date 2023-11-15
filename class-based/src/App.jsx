@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useState } from "react";
 import Counter from "./counter";
 import "./App.css";
 
@@ -10,6 +11,7 @@ class ClassInput extends Component {
       todos: ["Just some demo task", "As an example"],
       inputVal: "",
       counter: 0,
+      edit: 0,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,6 +43,27 @@ class ClassInput extends Component {
     });
   }
 
+  handleEdit(index) {
+    // Set editIndex to the clicked task index
+    this.setState({
+      editIndex: index,
+      inputVal: this.state.todos[index], // Set inputVal to the task content
+    });
+  }
+
+  handleSave(index) {
+    this.setState((prevState) => {
+      const updatedTodos = [...prevState.todos];
+      updatedTodos[index] = prevState.inputVal;
+
+      return {
+        todos: updatedTodos,
+        editIndex: -1, // Reset the editIndex after saving
+        inputVal: "",
+      };
+    });
+  }
+
   render() {
     return (
       <section>
@@ -60,13 +83,36 @@ class ClassInput extends Component {
         <ul>
           {this.state.todos.map((todo, index) => (
             <div key={todo} className="task">
-              <li key={todo}>{todo}</li>
-              <button
-                className="delete"
-                onClick={() => this.handleDelete(index)}
-              >
-                Delete
-              </button>
+              <>
+                {this.state.editIndex !== index ? (
+                  <li key={todo}>{todo}</li>
+                ) : (
+                  <input
+                    type="text"
+                    key={todo}
+                    value={this.state.inputVal}
+                    onChange={this.handleInputChange}
+                  />
+                )}
+                {this.state.editIndex !== index ? (
+                  <button
+                    className="delete"
+                    onClick={() => this.handleDelete(index)}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  <button
+                    className="save"
+                    onClick={() => this.handleSave(index)}
+                  >
+                    Save
+                  </button>
+                )}
+                <button className="edit" onClick={() => this.handleEdit(index)}>
+                  Edit
+                </button>
+              </>
             </div>
           ))}
         </ul>
