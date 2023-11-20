@@ -1,4 +1,6 @@
-import { Component, useState } from "react";
+import { Component, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Link, resolvePath } from "react-router-dom";
 import "./App.css";
 
 // Hello world exercise
@@ -18,6 +20,13 @@ function PropsComponent(props) {
     </div>
   );
 }
+PropsComponent.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+PropsComponent.defaultProps = {
+  name: "Marco",
+};
 
 // State and Event Handling exercise
 function ButtonComponent() {
@@ -46,6 +55,14 @@ function ListAndMap({ items }) {
     </div>
   );
 }
+
+ListAndMap.propTypes = {
+  items: PropTypes.array.isRequired,
+};
+
+ListAndMap.defaultProps = {
+  items: [1, 2, 3, 4, 5, 6, 7],
+};
 
 // Conditional Rendering exercise
 function BooleanState() {
@@ -134,6 +151,59 @@ class LifeCycle extends Component {
   }
 }
 
+function DataFetcher() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos/140", {
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("404 server not found");
+        }
+        return response.json();
+      })
+      .then((response) => setData(response))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="div">
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {data && (
+        <div>
+          <h2>Data:</h2>
+          <p>User ID: {data.userId}</p>
+          <p>ID: {data.id}</p>
+          <p>Title: {data.title}</p>
+          <p>Completed: {data.completed ? "Yes" : "No"}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const App = () => {
+  return (
+    <div>
+      <h1>Hello from the main page of the app!</h1>
+      <p>Here are some examples of links to other pages</p>
+      <nav>
+        <ul>
+          <li>
+            <Link to="profile">Profile page</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
 export {
   HelloWorld,
   PropsComponent,
@@ -142,4 +212,6 @@ export {
   BooleanState,
   SubmitCredential,
   LifeCycle,
+  App,
+  DataFetcher,
 };
