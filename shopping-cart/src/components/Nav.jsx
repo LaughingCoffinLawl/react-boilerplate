@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function Nav() {
+const Nav = (props) => {
+  Nav.propTypes = {
+    passedState: PropTypes.number, // assuming passedState is a number
+    selectedItems: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        image: PropTypes.string,
+        price: PropTypes.number,
+      })
+    ),
+    counter: PropTypes.arrayOf(PropTypes.number),
+  };
+
   const location = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [totalPrice, setTotalePrice] = useState(0);
 
   const openDialog = () => {
     setIsDialogOpen(true);
@@ -13,11 +27,32 @@ function Nav() {
     setIsDialogOpen(false);
   };
 
+  const totalPriceCalc = () => {
+    let total = 0;
+
+    // Check if selectedItems is defined and not null
+    if (props.selectedItems) {
+      props.selectedItems.forEach((item, index) => {
+        total += item.price * props.counter[index];
+      });
+    }
+
+    // Limiting the total to 2 digits after the decimal point
+    const formattedTotal = total.toFixed(2);
+
+    setTotalePrice(formattedTotal);
+  };
+
+  useEffect(() => {
+    totalPriceCalc();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.selectedItems, props.counter]);
+
   return (
     <>
       <nav className="nav">
         <div className="titleContainer">
-          <p className="siteTitle">Veglia's Shopping</p>
+          <p className="siteTitle">Veglia&apos;s Shopping</p>
         </div>
         <div className="links">
           <NavLink to="/">
@@ -28,7 +63,7 @@ function Nav() {
           </NavLink>
           {location.pathname === "/shop" && (
             <div className="cartContainer">
-              <p className="cartCounter">0</p>
+              <p className="cartCounter">{props.passedState}</p>
               <button className="cartButton" onClick={openDialog}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +81,6 @@ function Nav() {
 
       {isDialogOpen && (
         <div className="dialog">
-          <button className="checkout">Checkout</button>
           <button className="closeDialog" onClick={closeDialog}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +90,28 @@ function Nav() {
               <path d="M9,7H11L12,9.5L13,7H15L13,12L15,17H13L12,14.5L11,17H9L11,12L9,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
             </svg>
           </button>
+          <p>Selected Items:</p>
+          <ul>
+            {props.selectedItems.map((item, index) => (
+              <li key={index}>
+                <p>
+                  {item.title} x {props.counter[index]}{" "}
+                </p>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="checkoutImage"
+                />
+                <p>{item.price * props.counter[index]}</p>
+              </li>
+            ))}
+          </ul>
+          <p>Total price: ${totalPrice} </p>
+          <button className="checkout">Checkout</button>
         </div>
       )}
     </>
   );
-}
+};
 
 export default Nav;

@@ -83,9 +83,58 @@ svg:hover {
   flex-direction: column;
   height: 100vh;
   position: relative;
-  background-image: url("./assets/bg.jpg");
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    url("./assets/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+
+  .shopContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98vw;
+    margin-top: 12vh;
+    font-size: 20px;
+  }
+
+  .shopTitle {
+    color: black;
+    text-shadow: 1px 1px 2px rgb(120, 89, 177);
+  }
+
+  .cardsContainer {
+    width: 100vw;
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+    justify-content: space-evenly;
+    gap: 20px;
+    text-shadow: 1px 1px 2px rgb(120, 89, 177);
+    color: black;
+  }
+
+  .clothImg {
+    width: 150px;
+    height: auto;
+  }
+
+  .cards {
+    margin-left: 2vw;
+    width: 280px;
+    height: 420px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    background: linear-gradient(rgba(27, 25, 25, 0.6), rgba(22, 21, 21, 0.6));
+  }
 
   img {
     max-width: fit-content;
@@ -117,6 +166,18 @@ svg:hover {
   }
 }
 
+.amount {
+  display: flex;
+
+  .input {
+    text-align: center;
+  }
+}
+
+.shop {
+  height: 170vh;
+}
+
 /* Add this to your CSS */
 .dialog {
   position: fixed;
@@ -131,6 +192,11 @@ svg:hover {
   align-items: center;
   padding: 20px;
   z-index: 1000;
+
+  .checkoutImage {
+    width: 80px;
+    justify-self: center;
+  }
 
   .checkout {
     background-color: #4caf50;
@@ -222,11 +288,19 @@ svg:hover {
   text-shadow: 1px 1px 2px rgb(120, 89, 177);
   font-size: 24px;
   background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
     ),
     url("./assets/bg2.jpg");
   background-size: contain;
+
+  .endorsed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 
   .container {
     display: flex;

@@ -37,30 +37,32 @@ function Home() {
         </div>
       </div>
       <div className="featuredClothes">
-        <p>Test</p>
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error.message}</p>}
-        {clothingData && (
-          <div className="container">
-            {clothingData
-              .filter((clothes) => clothes.rating.rate > 4)
-              .map((clothes) => (
-                <div key={clothes.id} className="clothingItem">
-                  <p>{clothes.title}</p>
-                  <img
-                    className="clothesImg"
-                    src={clothes.image}
-                    alt={clothes.title}
-                  />
-                  <p>Price: ${clothes.price}</p>
-                  <p>
-                    Rating: {clothes.rating.rate} ({clothes.rating.count}{" "}
-                    reviews)
-                  </p>
-                </div>
-              ))}
-          </div>
-        )}
+        <div className="endorsed">
+          <p>Featured & Most Endorsed Items</p>
+          {loading && <p>Loading...</p>}
+          {error && <p>Error: {error.message}</p>}
+          {clothingData && (
+            <div className="container">
+              {clothingData
+                .filter((clothes) => clothes.rating.rate > 4)
+                .map((clothes) => (
+                  <div key={clothes.id} className="clothingItem">
+                    <p>{clothes.title}</p>
+                    <img
+                      className="clothesImg"
+                      src={clothes.image}
+                      alt={clothes.title}
+                    />
+                    <p>Price: ${clothes.price}</p>
+                    <p>
+                      Rating: {clothes.rating.rate} ({clothes.rating.count}{" "}
+                      reviews)
+                    </p>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { Component, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link, resolvePath } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./App.css";
 
 // Hello world exercise
